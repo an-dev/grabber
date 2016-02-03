@@ -1,0 +1,5 @@
+/.venv
+/img
+*.jpg
+schema.txt
+*.pyc

@@ -8,10 +8,14 @@
 import scrapy
 
 
-class AppItem(scrapy.Item):
-	look_id = scrapy.Field();
-	url  		= scrapy.Field() 
+class LookItem(scrapy.Item):
+	look_id 	= scrapy.Field()
+	title 		= scrapy.Field()
+	img_url		= scrapy.Field() 
 	desc 		= scrapy.Field() 
 	orig_hype 	= scrapy.Field()
-	#site_hype
-	user_id(fk) = scrapy.Field() 
+
+
+class LocationItem(scrapy.Item):
+	city    = scrapy.Field()
+	country = scrapy.Field()

@@ -3,3 +3,5 @@
 *.jpg
 schema.txt
 *.pyc
+.idea/
+

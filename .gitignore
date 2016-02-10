@@ -1,7 +1,13 @@
-/.venv
-/img
+# ext
 *.jpg
-schema.txt
 *.pyc
-.idea/
+*.sqlite3
 
+# folders
+.idea/
+/img
+/.venv
+
+# files
+app/test.json
+schema.txt

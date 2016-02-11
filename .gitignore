@@ -5,9 +5,11 @@
 
 # folders
 .idea/
+.secrets/
 /img
 /.venv
 
 # files
 app/test.json
+app/app/test.json
 schema.txt

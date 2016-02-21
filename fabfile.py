@@ -3,14 +3,13 @@ import os
 from fabric.api import *
 from fabric.contrib import django
 from distutils.util import strtobool
+import logging
+
+logger = logging.getLogger(__name__)
 
 if not os.path.isfile('./fabfile.py'):
     print '*****Error, you must be in the root directory for running fab commands*****'
     sys.exit(1)
-
-# ------------------------------
-# Fabric management functions
-# ------------------------------
 
 DJANGO_PROJECT = 'looksdigest'
 DEFAULT_ENV = 'dev'
@@ -24,6 +23,9 @@ def booleanize(val):
 
 
 def set_fab_env(function):
+    """
+        Custom decorator to import specific env
+    """
     def wrap_function(*args, **kwargs):
         env = DEFAULT_ENV
 
@@ -39,7 +41,8 @@ def set_fab_env(function):
         django.settings_module('{}.config.settings.{}'.format(DJANGO_PROJECT, env))
 
         try:
-            print args, kwargs
+            logger.debug('args = %s' % str(args))
+            logger.debug('kwargs = %s' % str(kwargs))
             return function(*args, **kwargs)
         except Exception as e:
             raise e
@@ -48,8 +51,12 @@ def set_fab_env(function):
 
 @set_fab_env
 def runserver(env=DEFAULT_ENV, autoreload=True):
-
-    # switch environment and get address:port from there
+    """
+        Runserver task
+        @env: environment in which to run the server
+        @autoreload: wheather to use or not --noreload flag
+    """
+    # TODO: get address:port from CLI
     if booleanize(autoreload):
         local('python manage.py runserver')
 
@@ -59,4 +66,8 @@ def runserver(env=DEFAULT_ENV, autoreload=True):
 
 @set_fab_env
 def migrate():
+    """
+        Migrate task
+    """
+    # TODO: migrate per app
     local('python manage.py migrate')

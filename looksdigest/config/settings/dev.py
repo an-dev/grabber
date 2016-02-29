@@ -3,8 +3,6 @@ from looksdigest.config.settings.base import *
 DJANGO_SETTINGS_MODULE = 'looksdigest.config.settings.dev'
 ENV = 'dev'
 loader = LoadConf(ENV)
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
     'default': {

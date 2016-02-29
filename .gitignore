@@ -5,7 +5,7 @@
 
 # folders
 .idea/
-.secrets/
+.secret/
 /img
 /.venv
 

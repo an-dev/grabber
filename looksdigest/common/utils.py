@@ -1,4 +1,5 @@
 import json
+import os
 from django.core.exceptions import ImproperlyConfigured
 
 
@@ -15,7 +16,8 @@ class LoadConf:
         """
 
         # JSON-based secrets module
-        secret_file = '.secret/%s.json' % self.sfile
+        DJANGO_PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        secret_file = '%s/.secret/%s.json' % (DJANGO_PROJECT_DIR, self.sfile)
         with open(secret_file) as f:
             secret_dict = json.loads(f.read())
 

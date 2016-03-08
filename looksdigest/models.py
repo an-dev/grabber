@@ -15,24 +15,29 @@ class TimestampedModel(models.Model):
 
 
 class Look(TimestampedModel):
-    hype        = models.IntegerField('Site hype')
-    title       = models.TextField('Look title')
+    hype        = models.IntegerField('Site hype', default=0)
+    title       = models.TextField('Look title', blank=True)
     img_url     = models.URLField('Location of look img')
     desc        = models.TextField('Look description', blank=True)
-    orig_id     = models.IntegerField('Original lookbook id')
-    orig_hype   = models.IntegerField('Original hype rating')
+    orig_id     = models.IntegerField('Original lookbook id', unique=True)
+    orig_hype   = models.IntegerField('Original hype rating', default=0)
     location    = models.ForeignKey('Location', related_name='looks')
 
     def __str__(self):
-        return 'Look {id:%s,url:%s}' % (self.orig_id, self.img_url)
+        return 'Look %s (%s)' % (self.orig_id, self.img_url)
 
 
 class Location(models.Model):
-    city    = models.TextField('City', unique=True, blank=True)
-    country = models.TextField('Country', unique=True)
+    city    = models.CharField('City', max_length=200, null=True)
+    country = models.CharField('Country', max_length=200)
+
+    class Meta:
+        unique_together = ('city', 'country')
 
     def __str__(self):
-        return '{city:%s,country:%s}' % (self.city, self.country)
+        if self.city is not None:
+            return '%s, %s' % (self.city, self.country)
+        return '%s' % self.country
 
 
 class Comment(TimestampedModel):

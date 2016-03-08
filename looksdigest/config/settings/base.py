@@ -18,16 +18,13 @@ loader = LoadConf(ENV)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 SECRET_KEY = 'k1&4)7h$hy)vxt-eghq4fhor_#^kurl=bxvr7t0nj^jcry=-sx'
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -68,7 +65,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'looksdigest.config.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases

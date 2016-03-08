@@ -16,7 +16,6 @@ from random import randrange
 import django
 from django.conf import settings
 
-django.setup()
 
 BOT_NAME = 'lookscraper'
 
@@ -38,15 +37,16 @@ DOWNLOAD_DELAY = 1
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 
-#ITEM_PIPELINES = {
-#    'lookscraper.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'lookscraper.pipelines.LookscraperPipeline': 300,
+}
 
 
 # ENV = os.environ.get("SCRAPY_ENV")
-os.environ['DJANGO_SETTINGS_MODULE'] = settings.DJANGO_SETTINGS_MODULE
-
-
+DJANGO_PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import sys
+sys.path.append(DJANGO_PROJECT_DIR)
+os.environ['DJANGO_SETTINGS_MODULE'] = '{}.config.settings.{}'.format('looksdigest', 'dev')
 # logger = logging.getLogger(__name__)
 # if ENV == 'prod':
 #     logger.setLevel(level=logging.INFO)
@@ -54,3 +54,4 @@ os.environ['DJANGO_SETTINGS_MODULE'] = settings.DJANGO_SETTINGS_MODULE
 # if ENV == 'dev':
 #     logger.setLevel(level=logging.DEBUG)
 
+django.setup()

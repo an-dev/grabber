@@ -31,16 +31,17 @@ def set_fab_env(function):
     """
     @task(alias=function.__name__)
     def wrap_function(*args, **kwargs):
+
         if len(args) > 0 and 'env' in kwargs:
             raise TypeError('%s() got multiple values for keyword argument "env"' % function.__name__)
+
+        environ = DEFAULT_ENV
 
         if len(args) > 0:
             environ = args[0]
         else:
             if 'env' in kwargs:
                 environ = kwargs['env']
-            else:
-                environ = DEFAULT_ENV
 
         django.settings_module('{}.config.settings.{}'.format(DJANGO_PROJECT, environ))
 
@@ -57,7 +58,7 @@ def set_fab_env(function):
 
 
 @set_fab_env
-def runserver(environ=DEFAULT_ENV, autoreload=True):
+def runserver(environ=None, autoreload=True):
     """
         Runserver task, takes in env, autoreload(bool)
     """
@@ -70,7 +71,7 @@ def runserver(environ=DEFAULT_ENV, autoreload=True):
 
 
 @set_fab_env
-def shell(environ=DEFAULT_ENV):
+def shell(environ=None):
     """
         IPython Shell task
     """
@@ -78,16 +79,40 @@ def shell(environ=DEFAULT_ENV):
 
 
 @set_fab_env
-def migrate(environ=DEFAULT_ENV):
+def migrate(environ=None, app=None):
     """
         Migrate task
     """
-    local('python manage.py migrate --run-syncdb')
+    if not app:
+        local('python manage.py migrate --run-syncdb')
+    else:
+        local('python manage.py migrate %s' % app)
 
 
 @set_fab_env
-def make_migrations(environ=DEFAULT_ENV):
+def make_migrations(environ=None, app=None):
     """
-        Create Migration task
+        Show current migrations and create for migration app
+    """
+    if not app:
+        print '*****No App specified. Is it in INSTALLED_APPS?*****'
+    else:
+        local('python manage.py showmigrations')
+        local('python manage.py makemigrations %s' % app)
+
+
+@set_fab_env
+def inspectdb(environ=None):
+    """
+        Inspect and see how are the tables made
+    """
+    local('python manage.py inspectdb')
+
+
+@set_fab_env
+def run_crawler(environ=None):
+    """
+        Run Scrapy commands trough django environment
     """
     local('python manage.py makemigrations')
+

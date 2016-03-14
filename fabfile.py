@@ -1,5 +1,5 @@
-import sys
 import os
+import sys
 import logging
 
 from distutils.util import strtobool
@@ -46,8 +46,8 @@ def set_fab_env(function):
         django.settings_module('{}.config.settings.{}'.format(DJANGO_PROJECT, environ))
 
         try:
-            logger.debug('args = %s' % str(args))
-            logger.debug('kwargs = %s' % str(kwargs))
+            # logger.debug('args = %s' % str(args))
+            # logger.debug('kwargs = %s' % str(kwargs))
             return function(*args, **kwargs)
         except Exception as e:
             raise e
@@ -79,25 +79,36 @@ def shell(environ=None):
 
 
 @set_fab_env
-def migrate(environ=None, app=None):
+def migrate(environ=None, app=None, num=None):
     """
         Migrate task
     """
     if not app:
         local('python manage.py migrate --run-syncdb')
     else:
-        local('python manage.py migrate %s' % app)
+        if num is not None:
+            local('python manage.py migrate %s %s' % (app, num))
+        else:
+            local('python manage.py migrate %s' % app)
 
 
 @set_fab_env
-def make_migrations(environ=None, app=None):
+def showmigrations(environ=None):
     """
-        Show current migrations and create for migration app
+        Show current migrations for all apps
+    """
+    local('python manage.py showmigrations')
+
+
+@set_fab_env
+def makemigrations(environ=None, app=None):
+    """
+        Create for migration for specific app
     """
     if not app:
-        print '*****No App specified. Is it in INSTALLED_APPS?*****'
+        print '*****No App specified. Runnig for ALL apps installed.*****'
+        local('python manage.py makemigrations')
     else:
-        local('python manage.py showmigrations')
         local('python manage.py makemigrations %s' % app)
 
 

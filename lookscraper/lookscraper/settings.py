@@ -31,8 +31,7 @@ USER_AGENTS = [
 USER_AGENT = USER_AGENTS[randrange(3)]
 
 CONCURRENT_REQUESTS = 2
-
-DOWNLOAD_DELAY = 1
+DOWNLOAD_DELAY      = 1
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html

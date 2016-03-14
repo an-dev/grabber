@@ -33,6 +33,9 @@ class LookSpider(Spider):
         # get directly num id and strip rest of string
         orig_id = look.xpath('@id').extract()[0].strip('look_')
 
+        # original date
+        orig_date = look.xpath('div[@class="look_meta_container"]/p/text()').extract()[-1:][0]
+        
         item['orig_id'] = orig_id
         item['title'] = look.xpath('//a[@id="look_title_' + orig_id + '"]/text()').extract()[0]
         item['img_url'] = look.xpath('//a[@id="photo_' + orig_id + '"]/img/@src').extract()[0]
@@ -46,9 +49,16 @@ class LookSpider(Spider):
         except IndexError:
             print 'No city for this one.'
             # logger.warn("No city for this one.")
-        item['country'] = \
-            look.xpath(
-                'div[@class="look_meta_container"]/p/a[starts-with(@data-page-track,"country")]/text()').extract()[0]
+
+        try:
+            item['country'] = \
+                look.xpath(
+                    'div[@class="look_meta_container"]/p/a[starts-with(@data-page-track,"country")]/text()').extract()[0]
+        except IndexError:
+            item['country'] = 'World'
+
+        item['orig_date'] = orig_date.replace('\n', '').replace(" ago", '').strip(' ')
+
         return item
 
     def parse(self, response):

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class TimestampedModel(models.Model):
@@ -21,6 +22,7 @@ class Look(TimestampedModel):
     desc        = models.TextField('Look description', blank=True)
     orig_id     = models.IntegerField('Original lookbook id', unique=True)
     orig_hype   = models.IntegerField('Original hype rating', default=0)
+    orig_date   = models.DateTimeField('Original creation dates', default=timezone.now, blank=True)
     location    = models.ForeignKey('Location', related_name='looks')
 
     def __str__(self):

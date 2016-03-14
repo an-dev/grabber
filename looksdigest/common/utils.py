@@ -11,7 +11,6 @@ class LoadConf:
 
     def get_secret(self, setting):
         """Get the secret variable or return explicit exception.
-        :type self: object
         :type setting: string
         """
 

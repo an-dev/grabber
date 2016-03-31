@@ -2,18 +2,18 @@
 
 A simple web app featuring top and new looks from lookbook.nu
 
-*Clone the repo 
-*Create a proper virtualenv,
+* Clone the repo 
+* Create a proper virtualenv,
 
 ```
 $ virtualenv venv
 $ source venv/bin/activate
 ```
 
-*Install dependencies
+* Install dependencies
 `$ pip install -r requirements.txt`
 
-*Create a .secret/base.json file containing basic db config
+* Create a .secret/base.json file containing basic db config
 ```
 {
   "DJANGO_DB_ENGINE":"django.db.backends.xxx",
@@ -25,15 +25,15 @@ $ source venv/bin/activate
 }
 ```
 
-*To use fabfile shortcuts modify `DEFAULT_ENV` var
+* To use fabfile shortcuts modify `DEFAULT_ENV` var
 
-*Run migrations
+* Run migrations
 `$ python manage.py migrate`
 
-*Create superuser for admin consulting
+* Create superuser for admin consulting
 `$ python manage.py createsuperuser`
 
-*Create a script to be executed by cron calling the scraper
+* Create a script to be executed by cron calling the scraper
 ```
 #~/.cron/lookscraper
 #!/bin/bash
@@ -49,19 +49,19 @@ cd ./$SPIDER_PATH
 scrapy crawl lookspider --logfile "/var/log/lookspider.log"
 ```
 
-*And give it proper permissions
+* And give it proper permissions
 `$ chmod +x ~/.cron/lookscraper.sh`
 
-*and then edit the crontab
-`*/5 * * * * ~/.cron/scraper.sh #runs the command every 5 minutes`
+* aaaand then edit the crontab
+`*/5 * * * * ~/.cron/scraper.sh # runs the command every 5 minutes`
 
-*Run the development server 
+* Run the development server 
 `$ python manage.py runserver`
 
 ====
 ToDo
 
-*build a django app to handle apis
-*build a decent frontend to display the looks and comments
-*more stuff I guess
+* build a django app to handle apis
+* build a decent frontend to display the looks and comments
+* more stuff I guess
 
